@@ -1,22 +1,24 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Data;
-
-// Directly referencing https://makolyte.com/csharp-mapping-nullable-columns-with-sqldatareader/
-// Added overload for column index
-public static class SqlDataReaderExtensions
+namespace SqlAzureDatabaseBasicMonitor
 {
-    public static T Get<T>(this SqlDataReader reader, string columnName)
+    // Directly referencing https://makolyte.com/csharp-mapping-nullable-columns-with-sqldatareader/
+    // Added overload for column index
+    public static class SqlDataReaderExtensions
     {
-        if (reader.IsDBNull(columnName))
-            return default;
-        return reader.GetFieldValue<T>(columnName);
-    }
+        public static T Get<T>(this SqlDataReader reader, string columnName)
+        {
+            if (reader.IsDBNull(columnName))
+                return default;
+            return reader.GetFieldValue<T>(columnName);
+        }
 
-    public static T Get<T>(this SqlDataReader reader, int columnIndex)
-    {
-        if (reader.IsDBNull(columnIndex))
-            return default;
-        return reader.GetFieldValue<T>(columnIndex);
+        public static T Get<T>(this SqlDataReader reader, int columnIndex)
+        {
+            if (reader.IsDBNull(columnIndex))
+                return default;
+            return reader.GetFieldValue<T>(columnIndex);
+        }
     }
 }
 
