@@ -84,8 +84,8 @@ namespace SqlAzureDatabaseBasicMonitor
         public async Task MonitorViaQuery()
         {
             // Set up our output streams
-            using MemoryStream stream = new();
-            using StreamWriter logWriter = new StreamWriter(stream, System.Text.Encoding.UTF8);
+            using var stream = this.PerformanceLog.OpenWriteAsync(false);
+            using StreamWriter logWriter = new(await stream, System.Text.Encoding.ASCII);
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
                 // No headers to prevent headaches reading elsewhere
@@ -99,7 +99,7 @@ namespace SqlAzureDatabaseBasicMonitor
                 await cn.OpenAsync();
 
                 // With a valid connection, get the last minute of performance data (should be 4 entries)
-                SqlCommand cmd = new("SELECT * FROM sys.dm_db_resource_stats WHERE end_time > DATEADD(mi, -1, current_timestamp)", cn);
+                SqlCommand cmd = new("SELECT * FROM sys.dm_db_resource_stats WHERE end_time > DATEADD(mi, -1, current_timestamp) ORDER BY end_time", cn);
                 SqlDataReader reader = await cmd.ExecuteReaderAsync();
                 List<SqlPerformance> perf = new();
 
@@ -129,20 +129,16 @@ namespace SqlAzureDatabaseBasicMonitor
                 using CsvWriter csv = new(logWriter, config);
                 csv.WriteRecords<SqlPerformance>(perf);
                 await logWriter.FlushAsync();
-                stream.Position = 0;
-                await this.PerformanceLog.AppendBlockAsync(stream);
                 this.Log.LogInformation($"SQL Peformance information logged at {DateTime.Now}");
             }
             catch (SqlException ex)
             {
                 // If we have failed to connect, prep the writing steam and output the full client error
-                using MemoryStream stream_ex = new();
-                using StreamWriter logWriter_ex = new(stream_ex, System.Text.Encoding.UTF8);
+                using var stream_ex = this.PerformanceLog.OpenWriteAsync(false);
+                using StreamWriter logWriter_ex = new(await stream_ex, System.Text.Encoding.ASCII);
                 using CsvWriter csv = new(logWriter_ex, config);
                 csv.WriteRecord(new SqlError { ErrorMessage = ex.Message });
                 await logWriter_ex.FlushAsync();
-                stream_ex.Position = 0;
-                await this.ErrorLog.AppendBlockAsync(stream_ex);
                 this.Log.LogWarning($"SQL Error logged at {DateTime.Now}");
             }
         }
