@@ -263,3 +263,4 @@ paket-files/
 __pycache__/
 *.pyc
 /Properties/PublishProfiles/cabattag - Zip Deploy.pubxml
+/Properties/ServiceDependencies/cabattag - Zip Deploy/profile.arm.json

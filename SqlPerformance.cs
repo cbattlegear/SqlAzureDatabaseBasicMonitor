@@ -4,19 +4,19 @@ namespace SqlAzureDatabaseBasicMonitor
 {
     public class SqlPerformance
     {
-        public DateTime? EndTime { get; set; }
-        public decimal? AvgCpuPercent { get; set; }
-        public decimal? AvgDataIoPercent { get; set; }
-        public decimal? AvgLogWritePercent { get; set; }
-        public decimal? AvgMemoryUsagePercent { get; set; }
-        public decimal? XtpStoragePercent { get; set; }
-        public decimal? MaxWorkerPercent { get; set; }
-        public decimal? MaxSessionPercent { get; set; }
-        public int? DtuLimit { get; set; }
-        public decimal? AvgLoginRatePercent { get; set; }
-        public decimal? AvgInstanceCpuPercent { get; set; }
-        public decimal? AvgInstanceMemoryPercent { get; set; }
-        public int? CpuLimit { get; set; }
-        public int? ReplicaRole { get; set; }
+        public DateTime? end_time { get; set; }
+        public decimal? avg_cpu_percent { get; set; }
+        public decimal? avg_data_io_percent { get; set; }
+        public decimal? avg_log_write_percent { get; set; }
+        public decimal? avg_memory_usage_percent { get; set; }
+        public decimal? xtp_storage_percent { get; set; }
+        public decimal? max_worker_percent { get; set; }
+        public decimal? max_session_percent { get; set; }
+        public int? dtu_limit { get; set; }
+        public decimal? avg_login_rate_percent { get; set; }
+        public decimal? avg_instance_cpu_percent { get; set; }
+        public decimal? avg_instance_memory_percent { get; set; }
+        public int? cpu_limit { get; set; }
+        public int? replica_role { get; set; }
     }
 }
