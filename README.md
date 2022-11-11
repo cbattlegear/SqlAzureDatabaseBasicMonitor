@@ -17,9 +17,18 @@ metrics of the database.
 "SQL_AZURE_CONNECTION_STRING": "The Connection string to the database you want to monitor",
 "BLOB_STORAGE_CONNECTION_STRING": "The Connection string to the storage account where you want to put your logging data",
 "LOGGING_CONTAINER_NAME": "The container name for the logging data",
-"LOG_FILE_CSV_SEPARATOR": "The separator for the logging information"
+"LOG_FILE_CSV_SEPARATOR": "The separator for the logging information",
+"ENABLE_EXTENDED_SQL_PERFORMANCE_MONITORING": "true or 1 to enable, anything else to disable"
 ```
-4. Verify the data is being stored in your Azure storage account, the file names will be performance-year-month-day.csv and errors-year-month-day.csv
+4. Verify the data is being stored in your Azure storage account, the file names will be performance-year-month-day.csv and errors-year-month-day.csv. If you enable Extended SQL Performance monitoring you will also extended-performance-year-month-day.csv and wait_stats-year-month-day.csv.
 
 ## Data Analysis
-**TODO** Will be adding relevant SQL Serverless pool queries to check perf.
+You can run through some quick analysis queries and results within the [SQL Performance Serverless Queries Notebook](serverless_queries/SQL_Performance_Serverless_Queries.ipynb). 
+This has some prebuilt views ready for the files created and some examples of how to analyze the data.
+
+## To Do Items
+ - Monitor Multiple Database
+ - Add Query Data Store Queries
+ - Clean up Jobs
+ - Custom Queries
+ - Azure Monitor Output
